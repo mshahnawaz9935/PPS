@@ -1,0 +1,15 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+
+  span
+  {
+      padding-right: 1rem;
+  }
+  a{
+      color:white;
+      text-decoration: none;
+  }
+  a:hover{
+      color:white;
+  }
