@@ -27,7 +27,7 @@ Angular @angular/cdk/drag-drop module was used to accomplissh this task.
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Mocked REST APIS
-Json-server npm module was used to mock the Rest APIS. All the data is contained in the employees.json file.
+**Json-server** npm module was used to mock the Rest APIS. All the data is contained in the employees.json file.
 It has two datasets which are Employees and Departments.
 
 To install the package use this command **npm install -g json-server** from the root directory.
