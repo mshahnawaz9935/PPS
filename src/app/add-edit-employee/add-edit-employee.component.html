@@ -1,0 +1,172 @@
+
+
+  <form *ngIf="injectedData.type == 'add' || injectedData.type == 'edit'"  #myform = "ngForm" (ngSubmit) = "onSubmit(myform)">
+    <span class="card_title">Employee Details</span>
+    <br />
+    <div class="row" style="padding-top:6%">
+    <div class="col-6" style="font-size: 15px;color:#0055a5;font-weight: bold;">
+        DOB
+        <div style="margin-top:5px">
+            <!-- <select name="calvingDifficulty" ng-model="newEvent.calvingDifficulty" class="form-control" ng-options="d.value as d.name for d in calvingDifficulty"><option value="" disabled selected>Select Calving Difficulty</option></select> -->
+            <input type="text" class="form-control" [(ngModel)]="model.dob" id="dob" aria-describedby="emailHelp" placeholder="Enter DOB" name="dob">
+        </div>
+    </div>
+    <div class="col-6" style="font-size: 15px;color:#0055a5;font-weight: bold;">
+        First Name
+        <div style="margin-top:5px">
+        <input type="text" class="form-control" id="exampleInputImage" placeholder="Enter First Name"  [(ngModel)]="model.firstName" name="firstName">
+        </div>
+    </div>
+    </div>
+
+    <div class="row" style="padding-top:3%">
+    <div class="col-6" style="font-size: 15px;color:#0055a5;font-weight: bold;">
+        Last Name
+        <div style="margin-top:5px">
+        <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name"  [(ngModel)]="model.lastName" name="lastName">
+        </div>
+    </div>
+
+    <div class="col-6" style="font-size: 15px;color:#0055a5;font-weight: bold;">
+        Region
+        <div style="margin-top:5px">
+            <input type="text" name="region" [(ngModel)]="model.region" class="form-control" id="region" placeholder="Enter Region">
+        </div>
+    </div>
+    </div>
+
+    <div class="row" style="padding-top:3%">
+    <div class="col-6" style="font-size: 15px;color:#0055a5;font-weight: bold;">
+        Speciality
+        <div style="margin-top:5px">
+            <input type="text" class="form-control" id="speciality" placeholder="speciality" name="speciality" [(ngModel)]="model.speciality">
+        </div>
+    </div>
+
+    <div class="col-6" style="font-size: 15px;color:#0055a5;font-weight: bold;">
+        Department
+        <div style="margin-top:5px">
+        <input type="number" class="form-control" id="departmentId" placeholder="Department" name="departmentId" [(ngModel)]="model.departmentId">
+        </div>
+      </div>
+    
+    </div>
+
+    <div class="row" style="padding-top:3%">
+    <div class="col-6" style="font-size: 15px;color:#0055a5;font-weight: bold;">
+        Email
+        <div style="margin-top:5px">
+            <!-- <select name="calvingDifficulty" ng-model="newEvent.calvingDifficulty" class="form-control" ng-options="d.value as d.name for d in calvingDifficulty"><option value="" disabled selected>Select Calving Difficulty</option></select> -->
+            <input type="email" class="form-control" [(ngModel)]="model.email" id="email" aria-describedby="email" placeholder="Enter Email" name="email">
+        </div>
+    </div>
+    </div>
+
+
+    <br />
+
+    <button type="submit"  class="btn btn-primary">Submit</button>
+    <div *ngIf="alert" class="row" style="z-index: 1;padding-top:3%">
+        <div class="col-lg-9">
+            <div class="alert alert-success" role="alert">
+                {{results}}
+            </div>
+        </div>
+    </div>
+
+  </form>
+
+
+<div *ngIf="injectedData.type == 'view'" >
+    <div class="row">
+        <div class="col-10">
+            <span class="card_title">Employee Details</span>
+        </div>
+        <div class="col-2">
+            <span style="cursor: pointer;"  (click)="toggleMode()"><img src='assets/edit.svg' height="35" width="35"/>
+            </span>
+        </div>
+        
+    </div>
+   
+    <br />
+      <div class="row details" style="padding-top:5%">
+        <div class="col-6">
+            <span class="link" href="#" style="margin-left:-13px">
+                Job Title Name
+            </span>
+        </div>
+        <div class="col-6">
+            <div style="color :#0060b2;font-weight:bold;font-stretch:normal; letter-spacing: 1.33px;font-size: 15px ">{{injectedData.data.speciality}}</div>
+
+        </div>
+    </div>
+    <div class="row details" style="padding-top:5%">
+        <div class="col-6">
+            <span class="link" href="#" style="margin-left:-13px">
+                Date Of Birth
+            </span>
+        </div>
+        <div class="col-6">
+            <div style="color :#0060b2;font-weight:bold;font-stretch:normal; letter-spacing: 1.33px;font-size: 15px ">{{injectedData.data.dob}}</div>
+
+        </div>
+    </div>
+    <div class="row details" style="padding-top:5%">
+        <div class="col-6">
+            <span class="link" href="#" style="margin-left:-13px">
+                First Name
+            </span>
+        </div>
+        <div class="col-6">
+            <div style="color :#0060b2;font-weight:bold;font-stretch:normal; letter-spacing: 1.33px;font-size: 15px ">{{injectedData.data.firstName}}</div>
+
+        </div>
+    </div>
+    <div class="row details" style="padding-top:5%">
+        <div class="col-6">
+            <span class="link" href="#" style="margin-left:-13px">
+                Last Name
+            </span>
+        </div>
+        <div class="col-6">
+            <div style="color :#0060b2;font-weight:bold;font-stretch:normal; letter-spacing: 1.33px;font-size: 15px ">{{injectedData.data.lastName}}</div>
+
+        </div>
+    </div>
+    <div class="row details" style="padding-top:5%">
+        <div class="col-6">
+            <span class="link" href="#" style="margin-left:-13px">
+                Department
+            </span>
+        </div>
+        <div class="col-6">
+            <div style="color :#0060b2;font-weight:bold;font-stretch:normal; letter-spacing: 1.33px;font-size: 15px ">{{injectedData.data.departmentId}}</div>
+
+        </div>
+    </div>
+    <div class="row details" style="padding-top:5%">
+        <div class="col-6">
+            <span class="link" href="#" style="margin-left:-13px">
+                Email
+            </span>
+        </div>
+        <div class="col-6">
+            <div style="color :#0060b2;font-weight:bold;font-stretch:normal; letter-spacing: 1.33px;font-size: 15px ">{{injectedData.data.email}}</div>
+
+        </div>
+    </div>
+
+    <div class="row details" style="padding-top:5%">
+        <div class="col-6">
+            <span class="link" href="#" style="margin-left:-13px">
+                Region
+            </span>
+        </div>
+        <div class="col-6">
+            <div style="color :#0060b2;font-weight:bold;font-stretch:normal; letter-spacing: 1.33px;font-size: 15px ">{{injectedData.data.region}}</div>
+
+        </div>
+    </div>
+</div>
+ 

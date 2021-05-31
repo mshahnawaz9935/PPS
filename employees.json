@@ -1,0 +1,75 @@
+{
+  "Employees": [
+    {
+      "dob": "1983/05/20",
+      "firstName": "Mike",
+      "lastName": "Connor",
+      "region": "Dublin",
+      "speciality": "Software Developer",
+      "departmentId": 1,
+      "email": "mryan@gmail.com",
+      "id": 1
+    },
+    {
+      "dob": "1983/05/23",
+      "firstName": "Liam",
+      "lastName": "Mullane",
+      "region": "Limerick",
+      "speciality": "Software Architect",
+      "departmentId": 2,
+      "email": "lmlimerick@gmail.com",
+      "id": 2
+    },
+    {
+      "dob": "1983/05/27",
+      "firstName": "Mary",
+      "lastName": "Mulvihill",
+      "region": "Ballybunnion",
+      "speciality": "Marketing",
+      "departmentId": 1,
+      "email": "mmulvihill@gmail.com",
+      "id": 3,
+      "departmentName": "Support"
+    },
+    {
+      "dob": "1984/09/24",
+      "firstName": "Denis",
+      "lastName": "Murphy",
+      "region": "Dublin",
+      "speciality": "Engineer",
+      "departmentId": 2,
+      "email": "denis@gmail.com",
+      "id": 4
+    },
+    {
+      "dob": "1983/05/27",
+      "firstName": "Christina",
+      "lastName": "O'Sullivan",
+      "region": "Athea",
+      "speciality": "Chudraiti",
+      "departmentId": 1,
+      "email": "cpo@gmail.com",
+      "id": 5
+    },
+    {
+      "dob": "1983/05/27",
+      "firstName": "Mary",
+      "lastName": "Murphy",
+      "region": "CA",
+      "speciality": "Marketing",
+      "departmentId": 2,
+      "email": "abc@gmail.com",
+      "id": 6
+    }
+  ],
+  "Departments": [
+    {
+      "id": 1,
+      "name": "Software"
+    },
+    {
+      "id": 2,
+      "name": "Support"
+    }
+  ]
+}

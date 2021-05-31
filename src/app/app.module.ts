@@ -12,12 +12,17 @@ import {MatCardModule} from '@angular/material/card';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DxDataGridModule } from 'devextreme-angular';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { AddEditEmployeeComponent } from './add-edit-employee/add-edit-employee.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
-    HomeComponent
+    HomeComponent,
+    AddEditEmployeeComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,6 +32,9 @@ import { DxDataGridModule } from 'devextreme-angular';
     MatToolbarModule,
     MatIconModule,
     DxDataGridModule,
+    DragDropModule,
+    FormsModule,
+    MatDialogModule,
     MatCardModule,
     MatButtonModule,
     RouterModule.forRoot([

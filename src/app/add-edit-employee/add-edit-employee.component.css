@@ -1,0 +1,17 @@
+.card_title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color:#0055a5;
+}
+.details {
+    border-bottom: 1px solid #ebf0f4;
+    height: 55px;
+    margin-left: 0%;
+    margin-right:-1px;
+}
+.link {
+    color: #8a95a0;
+    font-size:13px;
+    text-decoration: none;
+}
