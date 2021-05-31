@@ -1,20 +1,30 @@
 
 
-  <form *ngIf="injectedData.type == 'add' || injectedData.type == 'edit'"  #myform = "ngForm" (ngSubmit) = "onSubmit(myform)">
+  <form *ngIf="injectedData.type == 'add' || injectedData.type == 'edit'"  #myForm = "ngForm" (ngSubmit) = "onSubmit(myform)" novalidate>
     <span class="card_title">Employee Details</span>
     <br />
     <div class="row" style="padding-top:6%">
     <div class="col-6" style="font-size: 15px;color:#0055a5;font-weight: bold;">
         DOB
         <div style="margin-top:5px">
-            <!-- <select name="calvingDifficulty" ng-model="newEvent.calvingDifficulty" class="form-control" ng-options="d.value as d.name for d in calvingDifficulty"><option value="" disabled selected>Select Calving Difficulty</option></select> -->
-            <input type="text" class="form-control" [(ngModel)]="model.dob" id="dob" aria-describedby="emailHelp" placeholder="Enter DOB" name="dob">
+
+            <input type="text"  class="form-control" [(ngModel)]="model.dob" id="dob" placeholder="Enter DOB" name="dob" required >
+            <p style="padding-top:2%" >
+                <span *ngIf="myForm.controls.dob?.errors?.required">DOB is required</span>
+            </p>
+    
+
         </div>
     </div>
     <div class="col-6" style="font-size: 15px;color:#0055a5;font-weight: bold;">
         First Name
         <div style="margin-top:5px">
-        <input type="text" class="form-control" id="exampleInputImage" placeholder="Enter First Name"  [(ngModel)]="model.firstName" name="firstName">
+        <input type="text" class="form-control" id="firstName" placeholder="Enter First Name"  [(ngModel)]="model.firstName" name="firstName" required>
+
+        <p style="padding-top:2%">
+            <span *ngIf="myForm.controls.firstName?.errors?.required">First name is required</span>
+        </p>
+        
         </div>
     </div>
     </div>
@@ -46,26 +56,30 @@
     <div class="col-6" style="font-size: 15px;color:#0055a5;font-weight: bold;">
         Department
         <div style="margin-top:5px">
-        <input type="number" class="form-control" id="departmentId" placeholder="Department" name="departmentId" [(ngModel)]="model.departmentId">
+        <select name="departmentId" [(ngModel)]="model.departmentId" class="form-control" required >
+            <option *ngFor="let d of departments" [value]="d.id">{{ d.name }}</option></select>
+
+            <p style="padding-top:2%">
+                <span *ngIf="myForm.controls.departmentId?.errors?.required">Department is required</span>
+            </p>
+
+        </div> 
         </div>
       </div>
     
-    </div>
 
     <div class="row" style="padding-top:3%">
     <div class="col-6" style="font-size: 15px;color:#0055a5;font-weight: bold;">
         Email
         <div style="margin-top:5px">
-            <!-- <select name="calvingDifficulty" ng-model="newEvent.calvingDifficulty" class="form-control" ng-options="d.value as d.name for d in calvingDifficulty"><option value="" disabled selected>Select Calving Difficulty</option></select> -->
             <input type="email" class="form-control" [(ngModel)]="model.email" id="email" aria-describedby="email" placeholder="Enter Email" name="email">
         </div>
     </div>
     </div>
 
-
     <br />
-
-    <button type="submit"  class="btn btn-primary">Submit</button>
+   
+    <button type="submit"  class="btn btn-primary" [disabled]="myForm.invalid">Submit</button>
     <div *ngIf="alert" class="row" style="z-index: 1;padding-top:3%">
         <div class="col-lg-9">
             <div class="alert alert-success" role="alert">
@@ -73,7 +87,6 @@
             </div>
         </div>
     </div>
-
   </form>
 
 
@@ -141,7 +154,8 @@
             </span>
         </div>
         <div class="col-6">
-            <div style="color :#0060b2;font-weight:bold;font-stretch:normal; letter-spacing: 1.33px;font-size: 15px ">{{injectedData.data.departmentId}}</div>
+            <div style="color :#0060b2;font-weight:bold;font-stretch:normal; letter-spacing: 1.33px;font-size: 15px ">{{injectedData.data.departmentName}}</div>
+           
 
         </div>
     </div>

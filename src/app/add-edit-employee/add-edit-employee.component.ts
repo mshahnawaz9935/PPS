@@ -16,6 +16,11 @@ export class Employee {
   public departmentId : number
   ){}
 }
+export interface Department {
+  id: number,
+  name: string,
+  count : number
+}
 
 @Component({
   selector: 'app-add-edit-employee',
@@ -27,12 +32,15 @@ export class AddEditEmployeeComponent implements OnInit {
   injectedData : any;
   results : string = '';
   alert : boolean = false;
+  departments : Department[] = [];
   model = new Employee(0,'','' ,'' ,'', '','' ,0);
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any ,private dataService : APIService  ,private dialogRef: MatDialogRef<AddEditEmployeeComponent>) {
 
     console.log(data);
+    this.getDepartments();
     this.injectedData = data;
+    
     if(data != null || data != undefined)
     {
       this.model = new Employee(this.injectedData.data.id ,this.injectedData.data.speciality , this.injectedData.data.firstName, this.injectedData.data.lastName , this.injectedData.data.region,this.injectedData.data.dob, this.injectedData.data.email, this.injectedData.data.departmentId );
@@ -41,6 +49,7 @@ export class AddEditEmployeeComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    
   }
 
   // This method is to toggle from view Employee to edit Employee.
@@ -55,6 +64,27 @@ export class AddEditEmployeeComponent implements OnInit {
     })
   }
 
+    getDepartments()
+    {
+      this.dataService.getDepartments().subscribe((data: Department[]) => {
+
+        this.departments = data;
+        if(this.injectedData.data.departmentName == undefined &&  this.injectedData.type != 'add')
+        {
+          this.injectedData.data.departmentName =  this.departments.filter(x=>x.id == this.injectedData.data.departmentId)[0].name;
+        }
+      })
+    }
+
+  clearAlert()
+  {
+    setTimeout(() => {
+      this.alert = false;
+      this.results = "";
+    },2000);
+
+  }
+
   onSubmit(form: NgForm) {
     console.log('Your form data : ', form.value);
     if(this.injectedData.data.id == undefined)
@@ -65,16 +95,13 @@ export class AddEditEmployeeComponent implements OnInit {
            this.dataService.employees.push(data);
      //     this.getEmployees();
           this.results = "Employee Successfully Created" ;
-  
-          if(this.results != "")
-          {
+
             this.alert = true;
             setTimeout(() => {
               this.alert = false;
               this.results = "";
               this.dialogRef.close() ;
             },2000);
-          };
           
        }
      )
@@ -85,21 +112,13 @@ export class AddEditEmployeeComponent implements OnInit {
         data =>{ 
           console.log(data);
           this.results = "Employee Successfully Updated" ;
-
             this.alert = true;
-          //  var u = this.dataService.employees.find(x => x.id == this.injectedData.data.id);
-          //  this.dataService.employees[this.dataService.employees.indexOf(u)] = data;
-           // this.getEmployees();
             setTimeout(() => {
               this.alert = false;
               this.results = "";
-              
               this.dialogRef.close() ;
             },2000);
-          
-        }
-      )
-     
+        })
     }
   }
 

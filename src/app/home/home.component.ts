@@ -29,40 +29,28 @@ export interface Department {
 })
 export class HomeComponent implements OnInit {
 
-  values:any = [];
   EmployeesCount : number  = 0;
   employees : Employee[] = [];
   departments : Department[] = [];
   results : string = '';
   alert : boolean = false;
-  departmentName : string  = 'All';
-  constructor(private http: HttpClient , public dialog: MatDialog , public APIService : APIService ) {
+  departmentName : string  = 'All';          // Show Employees in all departments by default.
 
+  constructor(private http: HttpClient , public dialog: MatDialog , public APIService : APIService ) {
     this.getEmployees();
-    this.getDepartments();
    }
 
   ngOnInit(): void {
-   
   }
 
-  getDepartments()
-  {
-    this.http.get<Department[]>('http://localhost:3000/Departments',{responseType: 'json'})
-    .subscribe((data: Department[]) =>{  
-      this.getDepartmentCount(data) ;
-    });
-
-  }
 
   getDepartmentCount(departmentData)
   {
-    this.APIService.getEmployees().subscribe(data => 
-      {
+    this.APIService.getEmployees().subscribe(data => {
         for(var item of departmentData)
-          {
+        {
             item.count = data.filter(x => x.departmentId == item.id).length;
-          }
+        }
           this.departments = departmentData;
           console.log('department' , this.departments);
       });
@@ -80,37 +68,33 @@ export class HomeComponent implements OnInit {
     {
       this.APIService.getEmployees().subscribe(data => 
         {
-          // this.APIService.employees = data.filter(x => x.departmentId == item.id) ;
-          // this.employees = this.APIService.employees;
-          // this.departmentName = this.departments.filter(x=> x.id == item.id)[0].name;
            this.departmentName = name;
            let departmentId = this.departments.filter(x=> x.name == name)[0].id;
            this.APIService.employees = data.filter(x => x.departmentId == departmentId) ;
-           this.getDepartments();
-      //     this.employees = this.APIService.employees;
-       
+           this.getDepartmentCount(this.departments);
         }
       );
     }
   }
   getEmployees() {
 
-    this.APIService.getEmployees()
-    .subscribe(
-      data => {
-        
-        for(var item of data)
-        {
-          item.departmentName =  this.departments.filter(x=>x.id == item.departmentId)[0].name;
-        }
-        this.APIService.employees = data ;
-        this.employees = this.APIService.employees;
-        this.EmployeesCount = data.length;
-      }
-    );
+    this.APIService.getEmployees().subscribe(data => {
+        this.APIService.getDepartments().subscribe((departmentData: Department[])=> {
+          this.departments = departmentData;
+          for(var item of data)
+          {
+            // To get the department names from Department Id
+            item.departmentName =  departmentData.filter(x=>x.id == item.departmentId)[0].name;
+          }
+          this.APIService.employees = data ;
+          this.employees = this.APIService.employees;
+          this.EmployeesCount = data.length;
+          this.getDepartmentCount(departmentData);
+        });
+      });
    }
 
-  openModalBox(type :string, data : Object)
+  openModalBox(type :string, data : Object)      // Opnes a modal box to Add or Edit Employee.
   {
     console.log( 'in open' ,type , data );
     let modalBox = this.dialog.open( AddEditEmployeeComponent, {
@@ -122,6 +106,10 @@ export class HomeComponent implements OnInit {
     modalBox.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       this.getEmployeesByDepartment(this.departmentName);
+      if(type =='add')
+      {
+        this.EmployeesCount = this.EmployeesCount + 1;
+      }
     });
 
   }
@@ -130,13 +118,11 @@ export class HomeComponent implements OnInit {
   {
     console.log(id);
     this.APIService.deleteEmployees(id).subscribe(data => { 
-        this.getEmployees();
         this.results = "Employee Deleted" ;
         this.alert = true;
-            setTimeout(() => {
-              this.alert = false;
-              this.results = "";
-            },2000);
+        this.EmployeesCount = this.EmployeesCount - 1;
+        this.getEmployeesByDepartment(this.departmentName);
+        this.clearAlert();
       });
   }
 
@@ -179,14 +165,13 @@ export class HomeComponent implements OnInit {
           }
           else if(item.departmentId == department.id)
           {
-            this.results = "Employee " + item.firstName + " is already in " +  this.departments[event.currentIndex].name + " Department" ;
+            this.results = "Employee <b>" + item.firstName + "</b> is already in " +  this.departments[event.currentIndex].name + " Department" ;
             this.alert = true;
             this.clearAlert();
           }
           else
           {
-
-            this.results = "Employee " + item.firstName + " Moved to Department " +  this.departments[event.currentIndex].name ;
+            this.results = "Employee <b>" + item.firstName + "</b> Moved to Department " +  this.departments[event.currentIndex].name ;
 
             item.departmentId = department.id;
             this.alert = true;
@@ -197,9 +182,7 @@ export class HomeComponent implements OnInit {
                 
                 this.clearAlert();
               });
-          }
-
-          
+          } 
       }
       //  transferArrayItem(event.previousContainer.data,
         //                  event.container.data,

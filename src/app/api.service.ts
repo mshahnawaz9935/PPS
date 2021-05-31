@@ -31,6 +31,10 @@ export class APIService {
     return  this.http.get<Employee[]>('http://localhost:3000/Employees',{responseType: 'json'});
    }
 
+   getDepartments() {
+    return  this.http.get<Department[]>('http://localhost:3000/Departments',{responseType: 'json'});
+   }
+
    deleteEmployees(id:number)
    {
      return this.http.delete<Employee>('http://localhost:3000/Employees/'+ id,{responseType: 'json'})
