@@ -3,7 +3,7 @@ import { HttpClient , HttpHeaders, HttpParams} from '@angular/common/http';
 
 export interface Employee {
   id: number,
-  jobTitleName: string,
+  speciality: string,
   firstName: string,
   lastName: string,
   region: string,

@@ -7,7 +7,7 @@ import { APIService } from '../api.service';
 
 export interface Employee {
   id: number,
-  jobTitleName: string,
+  speciality: string,
   firstName: string,
   lastName: string,
   region: string,
@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
+  //Gets the count of employees in the department
   getDepartmentCount(departmentData)
   {
     this.APIService.getEmployees().subscribe(data => {
@@ -52,13 +52,12 @@ export class HomeComponent implements OnInit {
             item.count = data.filter(x => x.departmentId == item.id).length;
         }
           this.departments = departmentData;
-          console.log('department' , this.departments);
       });
   }
 
+  //Gets the employees in each department
   getEmployeesByDepartment(name : string)
   {
-    console.log('see the name' , name);
     if(name == 'All' || name == '')
     {
       this.departmentName = 'All';
@@ -76,6 +75,8 @@ export class HomeComponent implements OnInit {
       );
     }
   }
+
+  // To get all employees data
   getEmployees() {
 
     this.APIService.getEmployees().subscribe(data => {
@@ -99,34 +100,36 @@ export class HomeComponent implements OnInit {
     console.log( 'in open' ,type , data );
     let modalBox = this.dialog.open( AddEditEmployeeComponent, {
       data : { type : type , data :data , selectedDepartment : this.departmentName},
-      height : '600px',
-      width : '630px'
+      height : '630px',
+      width : '600px'
 
     });
-    modalBox.afterClosed().subscribe(result => {
+    modalBox.afterClosed().subscribe(result => {           // Actions performed when modal box is closed
       console.log(`Dialog result: ${result}`);
       this.getEmployeesByDepartment(this.departmentName);
       if(type =='add')
       {
+        // After employee has been added then increase the total employees count by 1.
         this.EmployeesCount = this.EmployeesCount + 1;
       }
     });
 
   }
 
-  deleteEmployee(id:number)
+  deleteEmployee(id:number)      // To delete employee
   {
     console.log(id);
     this.APIService.deleteEmployees(id).subscribe(data => { 
         this.results = "Employee Deleted" ;
         this.alert = true;
+         // After employee has been removed then decrease the total employees count by 1.
         this.EmployeesCount = this.EmployeesCount - 1;
         this.getEmployeesByDepartment(this.departmentName);
         this.clearAlert();
       });
   }
 
-  clearAlert()
+  clearAlert()      // Clear the alert message after two seconds.
   {
     setTimeout(() => {
       this.alert = false;
@@ -135,42 +138,42 @@ export class HomeComponent implements OnInit {
 
   }
   
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<string[]>) {         // For moving employee from one department to another
 
-    console.log(event , event.previousContainer.id, event.container);
-    //  console.log( item,   'moved to' ,  event.currentIndex);
       if (event.previousContainer === event.container) {
+        // When the source and destination of drag and drop is same. Nothing is done in this case.
         console.log('in the same source');
-      //  moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
      }
      else if(event.previousContainer.id === "cdk-drop-list-0")
      {
+       // To make sure that the departments aren't dropped into the employees section.
       this.results = "Department cannot be added to employees section." ;
           this.alert = true;
           this.clearAlert();
     }
       else {
        
-        console.log('in the different source' , event.previousIndex ,  event.currentIndex);
         if(event.previousIndex != undefined && event.currentIndex != undefined && event.previousContainer.id === "cdk-drop-list-1")
         {
           var item =   this.APIService.employees[event.previousIndex];
           var department = this.departments[event.currentIndex];
-          console.log(item,  event.previousIndex,  department , event.container.data);
           if(department == undefined)
           {
+              // If the drop fails to reach the target
               this.results = "Please Drag and Drop on a Department";
               this.alert = true;
               this.clearAlert();
           }
           else if(item.departmentId == department.id)
           {
+            // If the employee is already in the same department.
             this.results = "Employee <b>" + item.firstName + "</b> is already in " +  this.departments[event.currentIndex].name + " Department" ;
             this.alert = true;
             this.clearAlert();
           }
           else
           {
+            // Perform PUT Request to change Employee's department.
             this.results = "Employee <b>" + item.firstName + "</b> Moved to Department " +  this.departments[event.currentIndex].name ;
 
             item.departmentId = department.id;

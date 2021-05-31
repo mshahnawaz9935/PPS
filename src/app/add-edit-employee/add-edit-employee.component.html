@@ -47,7 +47,7 @@
 
     <div class="row" style="padding-top:3%">
     <div class="col-6" style="font-size: 15px;color:#0055a5;font-weight: bold;">
-        Speciality
+            Job Title Name or Speciality
         <div style="margin-top:5px">
             <input type="text" class="form-control" id="speciality" placeholder="speciality" name="speciality" [(ngModel)]="model.speciality">
         </div>
@@ -56,7 +56,7 @@
     <div class="col-6" style="font-size: 15px;color:#0055a5;font-weight: bold;">
         Department
         <div style="margin-top:5px">
-        <select name="departmentId" [(ngModel)]="model.departmentId" class="form-control" required >
+        <select name="departmentId" [(ngModel)]="model.departmentId" class="form-control" required id="departmentId" >
             <option *ngFor="let d of departments" [value]="d.id">{{ d.name }}</option></select>
 
             <p style="padding-top:2%">
@@ -79,10 +79,10 @@
 
     <br />
    
-    <button type="submit"  class="btn btn-primary" [disabled]="myForm.invalid">Submit</button>
+    <button type="submit" id="submit"  class="btn btn-primary" [disabled]="myForm.invalid">Submit</button>
     <div *ngIf="alert" class="row" style="z-index: 1;padding-top:3%">
         <div class="col-lg-9">
-            <div class="alert alert-success" role="alert">
+            <div id="results" class="alert alert-success" role="alert">
                 {{results}}
             </div>
         </div>
@@ -106,7 +106,7 @@
       <div class="row details" style="padding-top:5%">
         <div class="col-6">
             <span class="link" href="#" style="margin-left:-13px">
-                Job Title Name
+                Job Title Name or Speciality
             </span>
         </div>
         <div class="col-6">

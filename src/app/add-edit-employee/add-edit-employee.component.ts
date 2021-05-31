@@ -58,14 +58,14 @@ export class AddEditEmployeeComponent implements OnInit {
     this.injectedData.type = 'edit';
   }
 
-  getEmployees(){
+  getEmployees(){    // Get Employees
     this.dataService.getEmployees().subscribe(data => {
       this.dataService.employees = data;
     })
   }
 
     getDepartments()
-    {
+    {     // Get all the departments and also gets the department name corresponding to the Ids.
       this.dataService.getDepartments().subscribe((data: Department[]) => {
 
         this.departments = data;
@@ -76,31 +76,22 @@ export class AddEditEmployeeComponent implements OnInit {
       })
     }
 
-  clearAlert()
-  {
-    setTimeout(() => {
-      this.alert = false;
-      this.results = "";
-    },2000);
-
-  }
-
   onSubmit(form: NgForm) {
     console.log('Your form data : ', form.value);
+    // To check if employee is needed to be added or updated.
     if(this.injectedData.data.id == undefined)
     {
       console.log('add');
      this.dataService.addEmployees(form.value).subscribe(
        data =>  {  
            this.dataService.employees.push(data);
-     //     this.getEmployees();
           this.results = "Employee Successfully Created" ;
 
             this.alert = true;
             setTimeout(() => {
               this.alert = false;
               this.results = "";
-              this.dialogRef.close() ;
+              this.dialogRef.close() ;    // Close the dialog box automatically after 2s.
             },2000);
           
        }
@@ -116,7 +107,7 @@ export class AddEditEmployeeComponent implements OnInit {
             setTimeout(() => {
               this.alert = false;
               this.results = "";
-              this.dialogRef.close() ;
+              this.dialogRef.close() ;    // Close the dialog box automatically after 2s.
             },2000);
         })
     }

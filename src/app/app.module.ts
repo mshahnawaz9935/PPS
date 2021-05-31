@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import {  RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { UsersComponent } from './users/users.component';
 import {MatCardModule} from '@angular/material/card';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -20,7 +19,6 @@ import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
-    UsersComponent,
     HomeComponent,
     AddEditEmployeeComponent,
   ],
@@ -38,7 +36,6 @@ import { FormsModule } from '@angular/forms';
     MatCardModule,
     MatButtonModule,
     RouterModule.forRoot([
-      { path: 'users', component: UsersComponent },
       { path: '', component: HomeComponent },
     ])
   ],
