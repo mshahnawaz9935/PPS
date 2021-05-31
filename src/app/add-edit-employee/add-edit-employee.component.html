@@ -1,6 +1,6 @@
 
 
-  <form *ngIf="injectedData.type == 'add' || injectedData.type == 'edit'"  #myForm = "ngForm" (ngSubmit) = "onSubmit(myform)" novalidate>
+  <form *ngIf="injectedData.type == 'add' || injectedData.type == 'edit'"  #myForm = "ngForm" (ngSubmit) ="onSubmit(myForm)" novalidate>
     <span class="card_title">Employee Details</span>
     <br />
     <div class="row" style="padding-top:6%">
@@ -8,7 +8,7 @@
         DOB
         <div style="margin-top:5px">
 
-            <input type="text"  class="form-control" [(ngModel)]="model.dob" id="dob" placeholder="Enter DOB" name="dob" required >
+            <input type="date"  class="form-control" [(ngModel)]="model.dob" id="dob" placeholder="Enter DOB" name="dob" required >
             <p style="padding-top:2%" >
                 <span *ngIf="myForm.controls.dob?.errors?.required">DOB is required</span>
             </p>

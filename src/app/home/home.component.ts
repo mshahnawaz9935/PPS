@@ -100,7 +100,7 @@ export class HomeComponent implements OnInit {
     let modalBox = this.dialog.open( AddEditEmployeeComponent, {
       data : { type : type , data :data , selectedDepartment : this.departmentName},
       height : '600px',
-      width : '600px'
+      width : '630px'
 
     });
     modalBox.afterClosed().subscribe(result => {
